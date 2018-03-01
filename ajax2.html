@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<script>
+    window.onload = function () {
+        var getXHR = (function () {
+            var list = [
+               function () {
+                   return new XMLHttpRequest()
+               },function () {
+                   return new ActiveXObject('Microsoft.XMLHTTP')
+               },function () {
+                   return new ActiveXObject('Msxml2.XMLHTTP')
+               },function () {
+                   return new ActiveXObject('Msxml3.XMLHTTP')
+               }], xhr = null;
+            while(xhr = list.shift()) {
+                try {
+                   xhr();
+                   break;
+                }catch(e) {
+                   xhr = null;
+                   continue;
+                }
+            }
+            if (xhr !== null) {
+                return xhr;
+            }
+            throw new ReferenceError('浏览器不支持此功能');
+        })();
+
+        var xhr = getXHR();
+
+        xhr.open('delete', '/ajax', true, 'hulinhai', '123456');
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && /^2\d{2}$/.test(xhr.status)) {
+                console.log(xhr.responseText)
+            }
+        };
+
+        xhr.send();
+    }
+</script>
+</body>
+</html>
