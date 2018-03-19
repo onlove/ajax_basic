@@ -61,7 +61,13 @@
         //所有响应头信息都只能读,除了content-type
         xhr.overrideMimeType('text/plain');
 
+        
 
+        //当send方法里传入formdata时，request的content-type会自动变为multi-part/form-data
+        //xhr.send(new FormData)
+
+        //当send方法里传二进制的时候，request的content-type要设置为application/octet-stream
+        
         xhr.send();
     }
 </script>
