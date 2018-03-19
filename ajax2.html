@@ -39,11 +39,28 @@
 
         xhr.open('delete', '/ajax', true, 'hulinhai', '123456');
 
+        //只有加上这个mime type之后才是表单提交 --》 模拟个表单提交
+        xhr.setRequestHeader('conntent-type', 'application/x-www-form-urlencoded')
+
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && /^2\d{2}$/.test(xhr.status)) {
-                console.log(xhr.responseText)
+                console.log(xhr.responseText);
+                //得到指定的响应头信息
+                console.log(xhr.getResponseHeader('Data'))
+                //得到所有的响应头信息
+                console.log(xhr.getAllResponseHeaders())
             }
         };
+        //强制终止ajax
+        xhr.abort();
+
+
+
+        //重写server的mime type 
+        //ascii 文体
+        //所有响应头信息都只能读,除了content-type
+        xhr.overrideMimeType('text/plain');
+
 
         xhr.send();
     }
